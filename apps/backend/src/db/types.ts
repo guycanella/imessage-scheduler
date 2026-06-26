@@ -20,8 +20,8 @@ export interface ScheduledMessagesTable {
     last_error: string | null;
     gateway_guid: string | null;
     sent_at: Timestamp | null;
-    created_at: Generated<Timestamp>;
-    updated_at: Generated<Timestamp>;
+    created_at: Generated<Date>;
+    updated_at: Generated<Date>;
 }
 
 export interface MessageStatusEventsTable {
@@ -29,7 +29,7 @@ export interface MessageStatusEventsTable {
     message_id: string;
     status: MessageStatus;
     detail: ColumnType<Record<string, unknown> | null, string | null, string | null>;
-    created_at: Generated<Timestamp>;
+    created_at: Generated<Date>;
 }
 
 export interface SchedulerStateTable {

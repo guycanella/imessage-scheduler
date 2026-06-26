@@ -29,10 +29,16 @@ export const futureDate = z
             ctx.addIssue({ code: z.ZodIssueCode.custom, message: "Invalid date" });
             return z.NEVER;
         }
+
+        if (d.getTime() < Date.now() - CLOCK_SKEW_TOLERANCE_MS) {
+            ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                message: "Scheduled time must be in the future",
+            });
+            return z.NEVER;
+        }
+
         return d;
-    })
-    .refine((d) => d.getTime() >= Date.now() - CLOCK_SKEW_TOLERANCE_MS, {
-        message: "Scheduled time must be in the future",
     });
 
 export const scheduleMessageInput = z.object({
@@ -56,11 +62,14 @@ export const scheduledMessage = z.object({
     body: z.string(),
     scheduledAt: z.string(),
     status: messageStatusSchema,
+    attempts: z.number(),
+    lastError: z.string().nullable(),
     gatewayGuid: z.string().nullable(),
     sentAt: z.string().nullable(),
     createdAt: z.string(),
     updatedAt: z.string(),
 });
+
 export type ScheduledMessage = z.infer<typeof scheduledMessage>;
 
 export const statusEvent = z.object({

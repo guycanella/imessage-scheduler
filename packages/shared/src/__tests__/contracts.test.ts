@@ -41,6 +41,15 @@ describe("scheduleMessageInput", () => {
         expect(r.success).toBe(false);
     });
 
+    it("rejects a non-date string without throwing", () => {
+        const r = scheduleMessageInput.safeParse({
+            recipient: "(555) 123-4567",
+            body: "hi",
+            scheduledAt: "not-a-date",
+        });
+        expect(r.success).toBe(false);
+    });
+
     it("rejects a past scheduled time", () => {
         const r = scheduleMessageInput.safeParse({
             recipient: "(555) 123-4567",
