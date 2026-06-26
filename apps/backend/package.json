@@ -1,0 +1,28 @@
+{
+    "name": "@ims/backend",
+    "version": "0.0.0",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "dev": "tsx watch src/index.ts",
+        "build": "tsc -p tsconfig.json",
+        "typecheck": "tsc -p tsconfig.json --noEmit",
+        "test": "vitest run",
+        "db:migrate": "tsx src/db/migrate.ts latest",
+        "db:down": "tsx src/db/migrate.ts down",
+        "db:reset": "tsx src/db/migrate.ts reset"
+    },
+    "dependencies": {
+        "@ims/shared": "workspace:*",
+        "dotenv": "16.4.7",
+        "kysely": "0.27.5",
+        "pg": "8.13.1",
+        "zod": "3.24.1"
+    },
+    "devDependencies": {
+        "@types/node": "22.10.2",
+        "@types/pg": "8.11.10",
+        "tsx": "4.19.2",
+        "vitest": "2.1.8"
+    }
+}
