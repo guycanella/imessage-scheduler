@@ -1,0 +1,21 @@
+{
+    "name": "imessage-scheduler",
+    "private": true,
+    "packageManager": "pnpm@9.15.0",
+    "engines": {
+        "node": ">=22"
+    },
+    "scripts": {
+        "build": "turbo run build",
+        "dev": "turbo run dev",
+        "lint": "turbo run lint",
+        "test": "turbo run test",
+        "typecheck": "turbo run typecheck",
+        "db:migrate": "pnpm --filter @ims/backend db:migrate",
+        "db:reset": "pnpm --filter @ims/backend db:reset"
+    },
+    "devDependencies": {
+        "turbo": "2.3.3",
+        "typescript": "5.7.2"
+    }
+}
