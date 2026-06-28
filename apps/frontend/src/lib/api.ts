@@ -1,4 +1,4 @@
-import type { ScheduledMessage } from "@ims/shared";
+import type { MessageStats, ScheduledMessage } from "@ims/shared";
 
 export type StatusEventDto = {
   id: string;
@@ -47,4 +47,8 @@ export async function createMessage(
   });
   
   return parse<ScheduledMessage>(res);
+}
+
+export async function getStats(): Promise<MessageStats> {
+  return parse<MessageStats>(await fetch("/api/stats"));
 }

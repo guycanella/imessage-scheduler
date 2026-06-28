@@ -7,6 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Dashboard } from "@/components/dashboard";
 
 export default function App() {
   return (
@@ -22,6 +23,16 @@ export default function App() {
         </header>
 
         <div className="space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle>Overview</CardTitle>
+              <CardDescription>Delivery metrics across all scheduled messages.</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Dashboard />
+            </CardContent>
+          </Card>
+          
           <Card>
             <CardHeader>
               <CardTitle>New message</CardTitle>

@@ -39,6 +39,10 @@ const envSchema = z.object({
     .default(resolve(homedir(), "Library/Messages/chat.db")),
   CHATDB_POLL_MS: z.coerce.number().int().positive().default(3000),
   CHATDB_WATCH_TIMEOUT_MS: z.coerce.number().int().positive().default(300_000),
+  CHATDB_FAIL_ON_TIMEOUT: z
+    .enum(["true", "false"])
+    .default("false")
+    .transform((v) => v === "true"),
 });
 
 export type GatewayConfig = z.infer<typeof envSchema>;

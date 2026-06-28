@@ -16,6 +16,7 @@ export interface DeliveryWatcher {
 export interface WatcherOptions {
   pollMs: number;
   timeoutMs: number;
+  failOnTimeout: boolean;
 }
 
 export function createChatDbWatcher(
@@ -52,6 +53,11 @@ export function createChatDbWatcher(
           }
 
           if (Date.now() - startedAt >= options.timeoutMs) {
+            if (options.failOnTimeout && lastReported === null) {
+              await reporter.report(messageId, "FAILED", {
+                error: `not confirmed in chat.db within ${options.timeoutMs}ms`,
+              });
+            }
             clearInterval(timer);
           }
         })();

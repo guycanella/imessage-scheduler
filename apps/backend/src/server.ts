@@ -14,6 +14,7 @@ import {
   listScheduledMessages,
 } from "./db/repository.js";
 import { toScheduledMessageDto, toStatusEventDto } from "./serializers.js";
+import { getStats } from "./stats-service.js";
 
 type AsyncHandler = (req: Request, res: Response) => Promise<void>;
 
@@ -76,6 +77,14 @@ export function createServer(db: Kysely<Database>): Express {
         ...toScheduledMessageDto(found.message),
         events: found.events.map(toStatusEventDto),
       });
+    }),
+  );
+
+  app.get(
+    "/api/stats",
+    wrap(async (_req, res) => {
+      const stats = await getStats(db);
+      res.json(stats);
     }),
   );
 

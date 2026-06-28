@@ -21,6 +21,7 @@ if (config.GATEWAY_SENDER === "applescript") {
     watcher = createChatDbWatcher(reader, reporter, {
       pollMs: config.CHATDB_POLL_MS,
       timeoutMs: config.CHATDB_WATCH_TIMEOUT_MS,
+      failOnTimeout: config.CHATDB_FAIL_ON_TIMEOUT,
     });
   }
   sender = createAppleScriptSender(

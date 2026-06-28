@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { createMessage, listMessages } from "./api";
+import { createMessage, getStats, listMessages } from "./api";
 
 const messagesKey = ["messages"] as const;
 
@@ -19,5 +19,13 @@ export function useCreateMessage() {
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: messagesKey });
     },
+  });
+}
+
+export function useStats() {
+  return useQuery({
+    queryKey: ["stats"] as const,
+    queryFn: getStats,
+    refetchInterval: 5000,
   });
 }
