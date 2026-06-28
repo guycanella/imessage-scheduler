@@ -1,5 +1,4 @@
-import "../load-env.js";
-import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it } from "vitest";
+import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, inject } from "vitest";
 import { Migrator, type Kysely, sql } from "kysely";
 import { createDb } from "../db/connection.js";
 import { migrations } from "../db/migrations/index.js";
@@ -11,7 +10,7 @@ let db: Kysely<Database>;
 let messageId: string;
 
 beforeAll(async () => {
-    db = createDb();
+    db = createDb(inject("databaseUrl"));
     const migrator = new Migrator({
         db,
         provider: { getMigrations: async () => migrations },

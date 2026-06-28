@@ -1,5 +1,4 @@
-import "../../load-env.js";
-import { afterAll, afterEach, beforeAll, describe, expect, it } from "vitest";
+import { afterAll, afterEach, beforeAll, describe, expect, it, inject } from "vitest";
 import { Migrator, type Kysely, sql } from "kysely";
 import { createDb } from "../connection.js";
 import { migrations } from "../migrations/index.js";
@@ -16,7 +15,7 @@ const inOneHour = () => new Date(Date.now() + 3_600_000);
 const oneHourAgo = () => new Date(Date.now() - 3_600_000);
 
 beforeAll(async () => {
-    db = createDb();
+    db = createDb(inject("databaseUrl"));
     const migrator = new Migrator({
         db,
         provider: { getMigrations: async () => migrations },

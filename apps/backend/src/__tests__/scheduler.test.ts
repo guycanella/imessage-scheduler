@@ -1,5 +1,4 @@
-import "../load-env.js";
-import { afterAll, afterEach, beforeAll, describe, expect, it } from "vitest";
+import { afterAll, afterEach, beforeAll, describe, expect, it, inject } from "vitest";
 import { Migrator, type Kysely, sql } from "kysely";
 import { createDb } from "../db/connection.js";
 import { migrations } from "../db/migrations/index.js";
@@ -37,7 +36,7 @@ const setLastDispatch = (expr: string) =>
     sql`UPDATE scheduler_state SET last_dispatch_at = ${sql.raw(expr)} WHERE id = true`.execute(db);
 
 beforeAll(async () => {
-    db = createDb();
+    db = createDb(inject("databaseUrl"));
     const migrator = new Migrator({
         db,
         provider: { getMigrations: async () => migrations },

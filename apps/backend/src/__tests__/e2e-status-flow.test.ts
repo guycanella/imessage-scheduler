@@ -1,5 +1,4 @@
-import "../load-env.js";
-import { afterAll, afterEach, beforeAll, describe, expect, it } from "vitest";
+import { afterAll, afterEach, beforeAll, describe, expect, it, inject } from "vitest";
 import { Migrator, type Kysely, sql } from "kysely";
 import express from "express";
 import type { Server } from "node:http";
@@ -29,7 +28,7 @@ const urlOf = (server: Server): string =>
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 beforeAll(async () => {
-    db = createDb();
+    db = createDb(inject("databaseUrl"));
     const migrator = new Migrator({
         db,
         provider: { getMigrations: async () => migrations },
