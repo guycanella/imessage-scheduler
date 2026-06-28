@@ -76,7 +76,7 @@ export const statusEvent = z.object({
     id: z.string(),
     messageId: z.string(),
     status: messageStatusSchema,
-    detail: z.record(z.unknown()).nullable(),
+    detail: z.record(z.string(), z.unknown()).nullable(),
     createdAt: z.string(),
 });
 export type StatusEvent = z.infer<typeof statusEvent>;
@@ -86,7 +86,7 @@ export const statusWebhookInput = z
         gatewayGuid: z.string().optional(),
         messageId: z.string().optional(),
         status: messageStatusSchema,
-        detail: z.record(z.unknown()).optional(),
+        detail: z.record(z.string(), z.unknown()).optional(),
     })
     .refine((v) => v.gatewayGuid || v.messageId, {
         message: "Either gatewayGuid or messageId is required",
